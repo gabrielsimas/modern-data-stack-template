@@ -29,9 +29,12 @@ Execute estes comandos para garantir que os containers tenham permissão de escr
 
 ```console
 mkdir -p infra_data/postgres_data infra_data/dremio_data infra_data/portainer_data
+mkdir -p ~/modern-data-stack-template/infra_data/minio_data
 sudo chown -R 999:999 infra_data/postgres_data
 sudo chown -R root:root infra_data/dremio_data
 sudo chown -R root:root infra_data/portainer_data
+sudo chown -R simas:simas ~/modern-data-stack-template/infra_data/minio_data
+chmod -R 775 ~/modern-data-stack-template/infra_data/minio_data
 ```
 
 ## 🔌 Configuração de Projetos (Clientes)
@@ -74,16 +77,16 @@ sudo chown -R root:root infra_data/portainer_data
 ### **Criação dos Bancos de Dados: Nessie e Superset**
 ### 🦕 **Nessie**
 ```console
-docker exec -it mvp-shopping-control-list-postgres-1 psql -U airflow -c "CREATE DATABASE nessie;"
-docker exec -it mvp-shopping-control-list-postgres-1 psql -U airflow -c "CREATE USER nessie WITH PASSWORD 'nessie';"
-docker exec -it mvp-shopping-control-list-postgres-1 psql -U airflow -c "GRANT ALL PRIVILEGES ON DATABASE nessie TO nessie;"
+docker exec -it modern-data-stack-template-postgres-1 psql -U airflow -c "CREATE DATABASE nessie;"
+docker exec -it modern-data-stack-template-postgres-1 psql -U airflow -c "CREATE USER nessie WITH PASSWORD 'nessie';"
+docker exec -it modern-data-stack-template-postgres-1 psql -U airflow -c "GRANT ALL PRIVILEGES ON DATABASE nessie TO nessie;"
 ```
 ### 📊 **Superset**
 ```console
-docker exec -it mvp-shopping-control-list-postgres-1 psql -U airflow -c "CREATE DATABASE superset;"
-docker exec -it mvp-shopping-control-list-postgres-1 psql -U airflow -c "CREATE USER superset WITH PASSWORD 'superset';"
-docker exec -it mvp-shopping-control-list-postgres-1 psql -U airflow -c "GRANT ALL PRIVILEGES ON DATABASE superset TO superset;"
-docker exec -it mvp-shopping-control-list-postgres-1 psql -U airflow -d superset -c "GRANT ALL ON SCHEMA public TO superset;"
+docker exec -it modern-data-stack-template-postgres-1 psql -U airflow -c "CREATE DATABASE superset;"
+docker exec -it modern-data-stack-template-postgres-1 psql -U airflow -c "CREATE USER superset WITH PASSWORD 'superset';"
+docker exec -it modern-data-stack-template-postgres-1 psql -U airflow -c "GRANT ALL PRIVILEGES ON DATABASE superset TO superset;"
+docker exec -it modern-data-stack-template-postgres-1 psql -U airflow -d superset -c "GRANT ALL ON SCHEMA public TO superset;"
 ```
 ---
 ## **Recomendações para os clientes**
