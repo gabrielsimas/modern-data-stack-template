@@ -133,6 +133,19 @@ services:
       - QUARKUS_DATASOURCE_DB_KIND=postgresql
       # Instrução para criar as tabelas automaticamente
       - QUARKUS_HIBERNATE_ORM_DATABASE_GENERATION=update
+  minio:
+    image: minio/minio:latest
+    container_name: minio
+    restart: always
+    ports:
+      - "9010:9010"
+      - "9001:9001"
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ACCESS_KEY}
+      MINIO_ROOT_PASSWORD: ${MINIO_SECRET_KEY}
+    command: server /data --console-address ":9001" --address ":9010"
+    volumes:
+      - ./infra_data/minio_data:/data
   # --- Ferramenta de BI ---
   superset:
     image: apache/superset:latest
